@@ -1,9 +1,7 @@
 
 import React from "react";
 import { ParliamentaryGroup, Politician } from "../utils/parliamentUtils";
-import { BadgeCheck, Flag, Info } from "lucide-react";
 import { cn } from "@/lib/utils";
-import { HoverCard, HoverCardContent, HoverCardTrigger } from "@/components/ui/hover-card";
 
 interface PoliticalGroupProps {
   group: ParliamentaryGroup;
@@ -20,7 +18,7 @@ const PoliticalGroup: React.FC<PoliticalGroupProps> = ({
 }) => {
   // Calculate how many politicians to show based on the row
   // We'll show fewer politicians in the back rows for a curved chamber effect
-  const maxPoliticians = 5 - row;
+  const maxPoliticians = 4 - row;
   const displayedPoliticians = politicians.slice(0, maxPoliticians);
 
   // Map group colors to Tailwind classes
@@ -43,60 +41,34 @@ const PoliticalGroup: React.FC<PoliticalGroupProps> = ({
   };
 
   return (
-    <div className="flex flex-col items-center gap-2 my-1">
-      {/* Group label */}
-      <div className={cn(
-        "text-xs font-semibold mb-1 px-2 py-0.5 rounded-full shadow-sm",
-        getBgColor(),
-        getTextColor()
-      )}>
-        {row === 0 && (
-          <HoverCard>
-            <HoverCardTrigger asChild>
-              <span className="flex items-center gap-1 cursor-help">
-                <Flag className="w-3 h-3" />
-                {group.name}
-              </span>
-            </HoverCardTrigger>
-            <HoverCardContent className="w-64 p-3">
-              <div className="space-y-2">
-                <h4 className="font-semibold">{group.name}</h4>
-                <p className="text-xs text-muted-foreground">{group.orientation} orientation</p>
-                <div className="flex items-center gap-1">
-                  <Info className="w-3 h-3 text-muted-foreground" />
-                  <span className="text-xs">{group.seatsCount} seats in parliament</span>
-                </div>
-              </div>
-            </HoverCardContent>
-          </HoverCard>
-        )}
-      </div>
+    <div className="flex flex-col items-center gap-1">
+      {/* Group label - only show on the first row */}
+      {row === 0 && (
+        <div className={cn(
+          "text-xs font-medium px-1.5 py-0.5 rounded-full",
+          getBgColor(),
+          getTextColor()
+        )}>
+          {group.name}
+        </div>
+      )}
       
       {/* Politicians */}
-      <div className="flex justify-center items-center gap-2">
+      <div className="flex justify-center items-center gap-1">
         {displayedPoliticians.map((politician) => (
           <div
             key={politician.id}
             className={cn(
-              "w-8 h-8 md:w-10 md:h-10 rounded-full cursor-pointer flex items-center justify-center transform hover:scale-110 transition-transform shadow-md",
+              "w-6 h-6 md:w-8 md:h-8 rounded-full cursor-pointer flex items-center justify-center shadow-sm",
               getBgColor(),
-              getTextColor(),
-              "relative animate-fade-in"
+              getTextColor()
             )}
             onClick={() => onPoliticianClick(politician)}
             title={politician.name}
           >
-            <span className="text-xs font-semibold">
+            <span className="text-xs font-medium">
               {politician.name.charAt(0)}
-              {politician.name.split(" ")[1]?.charAt(0)}
             </span>
-            
-            {/* Badge for group leaders */}
-            {politician.role === "Group Leader" && (
-              <span className="absolute -top-1 -right-1 bg-white rounded-full p-0.5 shadow-sm">
-                <BadgeCheck className="w-3 h-3 text-primary" />
-              </span>
-            )}
           </div>
         ))}
       </div>

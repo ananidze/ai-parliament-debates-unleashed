@@ -1,3 +1,4 @@
+
 import React from "react";
 import PoliticalGroup from "./PoliticalGroup";
 import { 
@@ -31,19 +32,19 @@ const ParliamentLayout: React.FC<ParliamentLayoutProps> = ({
   });
 
   // Create rows for the semicircle layout
-  const rows = 3; // Number of semicircular rows
+  const rows = 2; // Reduced from 3 to 2 for simplicity
   
   return (
-    <div className="w-full mb-6">
+    <div className="w-full mb-4">
       <div className="relative parliament-chamber">
         {/* Speaker's podium */}
-        <div className="absolute -bottom-6 left-1/2 transform -translate-x-1/2 w-16 h-8 bg-parliament-podium rounded-t-lg z-10" />
+        <div className="absolute -bottom-4 left-1/2 transform -translate-x-1/2 w-12 h-6 bg-parliament-podium rounded-t-lg z-10" />
         
         {/* Parliament rows (semicircles) */}
         {Array.from({ length: rows }).map((_, rowIndex) => (
           <div
             key={`row-${rowIndex}`}
-            className={`flex justify-center items-center gap-4 mb-4`}
+            className={`flex justify-center items-center gap-3 mb-2`}
             style={{
               transform: `translateZ(${-rowIndex * 10}px)`,
               opacity: 1 - rowIndex * 0.1
@@ -65,11 +66,11 @@ const ParliamentLayout: React.FC<ParliamentLayoutProps> = ({
         ))}
       </div>
       
-      <div className="mt-10 flex justify-center items-center gap-8">
+      <div className="mt-6 flex justify-center items-center gap-4 flex-wrap">
         {sortedGroups.map((group) => (
-          <div key={group.id} className="flex items-center gap-2">
+          <div key={group.id} className="flex items-center gap-1">
             <div className={`w-3 h-3 rounded-full bg-${group.color}`}></div>
-            <span className="text-xs md:text-sm">{group.name}</span>
+            <span className="text-xs">{group.name}</span>
           </div>
         ))}
       </div>

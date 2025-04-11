@@ -128,15 +128,14 @@ const Index = () => {
 
   return (
     <div className="min-h-screen bg-gray-50">
-      <header className="bg-primary text-white py-4 px-4 shadow-md">
+      <header className="bg-primary text-white py-3 px-4 shadow-md">
         <div className="container mx-auto">
-          <h1 className="text-2xl md:text-3xl font-bold text-center">AI Parliament</h1>
-          <p className="text-center opacity-90 mt-1">Virtual Democratic Assembly</p>
+          <h1 className="text-xl md:text-2xl font-bold text-center">AI Parliament</h1>
         </div>
       </header>
       
-      <main className="container mx-auto px-4 py-6">
-        <div className="bg-parliament-chamber rounded-3xl p-4 md:p-8 shadow-inner mb-6">
+      <main className="container mx-auto px-3 py-4">
+        <div className="bg-white rounded-lg p-4 shadow-sm mb-4">
           <ParliamentLayout 
             groups={politicalGroups}
             politicians={politicians}
@@ -145,24 +144,26 @@ const Index = () => {
         </div>
         
         <Tabs defaultValue="debate" className="w-full">
-          <TabsList className="grid w-full grid-cols-2 mb-4">
-            <TabsTrigger value="debate">Current Debates</TabsTrigger>
-            <TabsTrigger value="propose">Propose New Law</TabsTrigger>
+          <TabsList className="grid w-full grid-cols-2 mb-3">
+            <TabsTrigger value="debate">Debates</TabsTrigger>
+            <TabsTrigger value="propose">Propose</TabsTrigger>
           </TabsList>
           
-          <TabsContent value="debate" className="mt-4">
-            <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
-              <div className="lg:col-span-1 space-y-4">
-                <h2 className="text-xl font-bold mb-4">Law Proposals</h2>
-                {lawProposals.map(law => (
-                  <LawProposal
-                    key={law.id}
-                    law={law}
-                    groups={politicalGroups}
-                    onSelectLaw={handleSelectLaw}
-                    isActive={activeLaw?.id === law.id}
-                  />
-                ))}
+          <TabsContent value="debate" className="mt-3">
+            <div className="grid grid-cols-1 lg:grid-cols-3 gap-3">
+              <div className="lg:col-span-1">
+                <h2 className="text-lg font-medium mb-2">Law Proposals</h2>
+                <div className="space-y-2">
+                  {lawProposals.map(law => (
+                    <LawProposal
+                      key={law.id}
+                      law={law}
+                      groups={politicalGroups}
+                      onSelectLaw={handleSelectLaw}
+                      isActive={activeLaw?.id === law.id}
+                    />
+                  ))}
+                </div>
               </div>
               
               <div className="lg:col-span-2">
@@ -176,11 +177,11 @@ const Index = () => {
                     onVote={handleVote}
                   />
                 ) : (
-                  <div className="h-full flex items-center justify-center border rounded-lg bg-white p-8">
+                  <div className="h-full flex items-center justify-center border rounded-lg bg-white p-6">
                     <div className="text-center">
-                      <h3 className="text-xl font-semibold mb-2">No Active Debate</h3>
-                      <p className="text-muted-foreground">
-                        Select a law proposal from the list to start or join a debate.
+                      <h3 className="text-lg font-medium mb-2">No Active Debate</h3>
+                      <p className="text-muted-foreground text-sm">
+                        Select a law proposal to start a debate.
                       </p>
                     </div>
                   </div>
@@ -189,7 +190,7 @@ const Index = () => {
             </div>
           </TabsContent>
           
-          <TabsContent value="propose" className="mt-4">
+          <TabsContent value="propose" className="mt-3">
             <div className="max-w-2xl mx-auto">
               <ProposalForm
                 groups={politicalGroups}
@@ -210,7 +211,7 @@ const Index = () => {
           }
         }}
       >
-        <DialogContent>
+        <DialogContent className="max-w-md">
           <DialogHeader>
             <DialogTitle>Politician Profile</DialogTitle>
           </DialogHeader>
