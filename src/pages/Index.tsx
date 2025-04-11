@@ -55,7 +55,7 @@ const Index = () => {
     // Update law status
     setLawProposals(prevLaws => 
       prevLaws.map(l => 
-        l.id === law.id ? { ...l, status: "debating" } : l
+        l.id === law.id ? { ...l, status: "debating" as const } : l
       )
     );
     
@@ -113,7 +113,7 @@ const Index = () => {
       title: proposal.title,
       description: proposal.description,
       proposedBy: proposal.proposedBy,
-      status: "pending",
+      status: "pending" as const, // Use const assertion to fix the type error
       votes: {
         for: 0,
         against: 0,
