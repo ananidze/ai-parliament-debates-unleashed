@@ -37,12 +37,39 @@ const LawProposal: React.FC<LawProposalProps> = ({
       default: return "Pending";
     }
   };
+  
+  // Get party symbol
+  const getPartySymbol = () => {
+    switch (proposingGroup?.id) {
+      case "conservatives": return "🦅"; 
+      case "liberals": return "🌹";
+      case "greens": return "🌿";
+      case "moderates": return "⚖️";
+      case "radicals": return "✊";
+      default: return "🏛️";
+    }
+  };
+
+  // Get party color class
+  const getPartyColorClass = () => {
+    switch (proposingGroup?.id) {
+      case "conservatives": return "border-l-parliament-conservative"; 
+      case "liberals": return "border-l-parliament-liberal";
+      case "greens": return "border-l-parliament-green";
+      case "moderates": return "border-l-parliament-moderate";
+      case "radicals": return "border-l-parliament-radical";
+      default: return "border-l-gray-500";
+    }
+  };
 
   return (
-    <Card className={`transition-all ${isActive ? 'border-primary border-2' : ''}`}>
+    <Card className={`transition-all border-l-4 ${getPartyColorClass()} ${isActive ? 'border-2 border-l-4' : ''}`}>
       <CardHeader className="py-2 px-4">
         <div className="flex justify-between items-start gap-1">
-          <CardTitle className="text-sm">{law.title}</CardTitle>
+          <div className="flex items-center gap-1">
+            <span>{getPartySymbol()}</span>
+            <CardTitle className="text-sm">{law.title}</CardTitle>
+          </div>
           <Badge variant={statusBadgeVariant() as any} className="text-xs">{statusText()}</Badge>
         </div>
       </CardHeader>
@@ -51,7 +78,7 @@ const LawProposal: React.FC<LawProposalProps> = ({
           {law.description.length > 60 ? law.description.substring(0, 60) + '...' : law.description}
         </p>
         <div className="flex justify-between items-center">
-          <span className="text-xs">By: {proposingGroup?.name}</span>
+          <span className="text-xs">{proposingGroup?.name}</span>
           <Button 
             onClick={() => onSelectLaw(law)} 
             variant={isActive ? "default" : "outline"}

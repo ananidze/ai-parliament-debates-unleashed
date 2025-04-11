@@ -18,17 +18,21 @@ const ParliamentLayout: React.FC<ParliamentLayoutProps> = ({
   politicians,
   onPoliticianClick
 }) => {
-  // Sort groups by number of seats (larger groups in the middle)
+  // Sort groups by political orientation for the parliament layout
   const sortedGroups = [...groups].sort((a, b) => {
-    // If they're from opposite ends of the spectrum, keep their positions
-    if (
-      (a.orientation.includes("Left") && b.orientation.includes("Right")) ||
-      (a.orientation.includes("Right") && b.orientation.includes("Left"))
-    ) {
-      return a.orientation.includes("Left") ? -1 : 1;
-    }
-    // Otherwise sort by seats count
-    return b.seatsCount - a.seatsCount;
+    const orientationOrder = {
+      "Far Left": 0,
+      "Left Wing": 1,
+      "Center": 2,
+      "Right Wing": 3,
+      "Far Right": 4
+    };
+    
+    // Get numerical values for orientations
+    const aOrder = orientationOrder[a.orientation] ?? 2;
+    const bOrder = orientationOrder[b.orientation] ?? 2;
+    
+    return aOrder - bOrder;
   });
 
   // Create rows for the semicircle layout
@@ -36,15 +40,17 @@ const ParliamentLayout: React.FC<ParliamentLayoutProps> = ({
   
   return (
     <div className="w-full mb-4">
+      <h2 className="text-base font-medium text-center mb-3">Parliament Chamber</h2>
+      
       <div className="relative parliament-chamber">
         {/* Speaker's podium */}
-        <div className="absolute -bottom-4 left-1/2 transform -translate-x-1/2 w-12 h-6 bg-parliament-podium rounded-t-lg z-10" />
+        <div className="absolute -bottom-4 left-1/2 transform -translate-x-1/2 w-10 h-5 bg-parliament-podium rounded-t-lg z-10" />
         
         {/* Parliament rows (semicircles) */}
         {Array.from({ length: rows }).map((_, rowIndex) => (
           <div
             key={`row-${rowIndex}`}
-            className={`flex justify-center items-center gap-3 mb-2`}
+            className={`flex justify-center items-center gap-2 md:gap-3 mb-2`}
             style={{
               transform: `translateZ(${-rowIndex * 10}px)`,
               opacity: 1 - rowIndex * 0.1
@@ -66,11 +72,15 @@ const ParliamentLayout: React.FC<ParliamentLayoutProps> = ({
         ))}
       </div>
       
-      <div className="mt-6 flex justify-center items-center gap-4 flex-wrap">
+      <div className="mt-5 flex justify-center items-center gap-2 flex-wrap">
         {sortedGroups.map((group) => (
-          <div key={group.id} className="flex items-center gap-1">
-            <div className={`w-3 h-3 rounded-full bg-${group.color}`}></div>
-            <span className="text-xs">{group.name}</span>
+          <div key={group.id} className="flex items-center gap-1 border px-2 py-1 rounded-full text-xs">
+            {group.id === "conservatives" && "🦅"}
+            {group.id === "liberals" && "🌹"}
+            {group.id === "greens" && "🌿"}
+            {group.id === "moderates" && "⚖️"}
+            {group.id === "radicals" && "✊"}
+            <span>{group.name}</span>
           </div>
         ))}
       </div>

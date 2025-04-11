@@ -3,6 +3,7 @@ import React from "react";
 import { Politician as PoliticianType, ParliamentaryGroup } from "../utils/parliamentUtils";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { cn } from "@/lib/utils";
+import { Badge } from "@/components/ui/badge";
 
 interface PoliticianProps {
   politician: PoliticianType;
@@ -13,40 +14,76 @@ const Politician: React.FC<PoliticianProps> = ({ politician, group }) => {
   // Get the appropriate background color based on political group
   const getBgColor = () => {
     switch (group.id) {
-      case "conservative": return "bg-parliament-conservative"; 
-      case "liberal": return "bg-parliament-liberal";
-      case "green": return "bg-parliament-green";
-      case "moderate": return "bg-parliament-moderate";
-      case "radical": return "bg-parliament-radical";
+      case "conservatives": return "bg-parliament-conservative"; 
+      case "liberals": return "bg-parliament-liberal";
+      case "greens": return "bg-parliament-green";
+      case "moderates": return "bg-parliament-moderate";
+      case "radicals": return "bg-parliament-radical";
       default: return "bg-gray-500";
     }
   };
 
   // Get text color based on background darkness
   const getTextColor = () => {
-    return ["conservative", "liberal", "radical"].includes(group.id) 
+    return ["conservatives", "liberals", "radicals"].includes(group.id) 
       ? "text-white" 
       : "text-gray-900";
   };
 
+  // Get party symbol
+  const getPartySymbol = () => {
+    switch (group.id) {
+      case "conservatives": return "🦅"; 
+      case "liberals": return "🌹";
+      case "greens": return "🌿";
+      case "moderates": return "⚖️";
+      case "radicals": return "✊";
+      default: return "🏛️";
+    }
+  };
+
   return (
     <div className="flex flex-col items-center text-center">
-      <Avatar className="h-16 w-16 mb-2">
-        <AvatarFallback className={cn(
-          getBgColor(),
-          "text-lg font-semibold",
-          getTextColor()
+      <div className="mb-4 flex items-center gap-2">
+        <Avatar className="h-20 w-20">
+          <AvatarFallback className={cn(
+            getBgColor(),
+            "text-xl font-semibold",
+            getTextColor()
+          )}>
+            {politician.name.charAt(0)}
+          </AvatarFallback>
+        </Avatar>
+        <div className={cn(
+          "flex flex-col items-start",
+          "ml-2"
         )}>
-          {politician.name.charAt(0)}
-        </AvatarFallback>
-      </Avatar>
+          <h3 className="font-medium text-lg">{politician.name}</h3>
+          <div className="flex items-center mt-1">
+            <span className="mr-2">{getPartySymbol()}</span>
+            <span className="text-sm text-muted-foreground">{group.name}</span>
+          </div>
+          {politician.role && (
+            <Badge variant="outline" className="mt-1">{politician.role}</Badge>
+          )}
+        </div>
+      </div>
       
-      <h3 className="font-medium text-base">{politician.name}</h3>
-      <p className="text-sm text-muted-foreground">{group.name}</p>
-      
-      <div className="mt-2 text-sm">
-        <p><span className="font-medium">Role:</span> {politician.role || "Member"}</p>
-        <p><span className="font-medium">Specialty:</span> {politician.specialty}</p>
+      <div className="w-full px-4 py-3 bg-muted rounded-md">
+        <div className="mb-2">
+          <h4 className="font-semibold text-sm">Party Values</h4>
+          <p className="text-xs text-muted-foreground">{group.description}</p>
+        </div>
+        
+        <div className="mb-2">
+          <h4 className="font-semibold text-sm">Political Orientation</h4>
+          <p className="text-xs text-muted-foreground">{group.orientation}</p>
+        </div>
+        
+        <div>
+          <h4 className="font-semibold text-sm">Specialty</h4>
+          <p className="text-xs text-muted-foreground">{politician.specialty}</p>
+        </div>
       </div>
     </div>
   );

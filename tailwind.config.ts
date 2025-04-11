@@ -53,15 +53,15 @@ export default {
 					DEFAULT: 'hsl(var(--card))',
 					foreground: 'hsl(var(--card-foreground))'
 				},
-				// Parliament specific colors
+				// Parliament specific colors - updated to more recognizable political colors
 				parliament: {
 					chamber: '#f0f4f8',
-					conservative: '#0052a5',
-					liberal: '#e51b23',
-					green: '#00b050',
-					moderate: '#f3c300',
-					radical: '#7209b7',
-					podium: '#8b4513',
+					conservative: '#0052a5', // Dark blue - traditional conservative color
+					liberal: '#e51b23',      // Red - traditional liberal/progressive color
+					green: '#00b050',        // Green - environmental/green party color
+					moderate: '#f3c300',     // Yellow - often used for centrist/moderate parties
+					radical: '#7209b7',      // Purple - often used for radical/alternative parties
+					podium: '#8b4513',       // Traditional wood color for the podium
 				},
 				sidebar: {
 					DEFAULT: 'hsl(var(--sidebar-background))',
@@ -72,6 +72,10 @@ export default {
 					'accent-foreground': 'hsl(var(--sidebar-accent-foreground))',
 					border: 'hsl(var(--sidebar-border))',
 					ring: 'hsl(var(--sidebar-ring))'
+				},
+				success: {
+					DEFAULT: "#10b981", // Green for successful actions
+					foreground: "#ffffff"
 				}
 			},
 			borderRadius: {
