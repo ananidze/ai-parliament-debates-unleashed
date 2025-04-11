@@ -1,5 +1,4 @@
-
-import { PoliticalOrientation, ParliamentaryGroup, Politician } from "../utils/parliamentUtils";
+import { PoliticalOrientation, ParliamentaryGroup, Politician, LawProposal, DebateStatement } from "../utils/parliamentUtils";
 
 // Define political groups
 export const politicalGroups: ParliamentaryGroup[] = [
@@ -47,7 +46,6 @@ export const politicalGroups: ParliamentaryGroup[] = [
 
 // Sample politicians (5 from each group)
 export const politicians: Politician[] = [
-  // Conservatives
   {
     id: "c1",
     name: "Victoria Montgomery",
@@ -85,7 +83,6 @@ export const politicians: Politician[] = [
     specialty: "Justice"
   },
 
-  // Liberals
   {
     id: "l1",
     name: "Sophia Rodriguez",
@@ -123,7 +120,6 @@ export const politicians: Politician[] = [
     specialty: "Housing"
   },
 
-  // Greens
   {
     id: "g1",
     name: "Oliver Greenwood",
@@ -161,7 +157,6 @@ export const politicians: Politician[] = [
     specialty: "Wildlife Conservation"
   },
 
-  // Moderates
   {
     id: "m1",
     name: "Catherine Gray",
@@ -199,7 +194,6 @@ export const politicians: Politician[] = [
     specialty: "Small Business"
   },
 
-  // Radicals
   {
     id: "r1",
     name: "Felix Diaz",
@@ -239,7 +233,7 @@ export const politicians: Politician[] = [
 ];
 
 // Sample law proposals
-export const lawProposals = [
+export const lawProposals: LawProposal[] = [
   {
     id: "law1",
     title: "Universal Basic Income Act",
@@ -308,7 +302,7 @@ export const lawProposals = [
 ];
 
 // Sample debate statements for the active law
-export const initialDebateStatements = [
+export const initialDebateStatements: DebateStatement[] = [
   {
     id: "stmt1",
     politicianId: "l1",

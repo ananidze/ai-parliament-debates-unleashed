@@ -44,7 +44,7 @@ const Index = () => {
     if (activeLaw && activeLaw.id !== law.id) {
       setLawProposals(prevLaws => 
         prevLaws.map(l => 
-          l.id === activeLaw.id ? { ...l, status: "pending" as const } : l
+          l.id === activeLaw.id ? { ...l, status: "pending" } : l
         )
       );
     }
@@ -55,7 +55,7 @@ const Index = () => {
     // Update law status
     setLawProposals(prevLaws => 
       prevLaws.map(l => 
-        l.id === law.id ? { ...l, status: "debating" as const } : l
+        l.id === law.id ? { ...l, status: "debating" } : l
       )
     );
     
@@ -86,10 +86,10 @@ const Index = () => {
           
           // Determine if the law passes or fails after voting
           const totalVotes = updatedVotes.for + updatedVotes.against;
-          let status = law.status;
+          let status: LawProposalType["status"] = law.status;
           
           if (totalVotes >= 50) { // Arbitrary number for demonstration
-            status = updatedVotes.for > updatedVotes.against ? "passed" as const : "rejected" as const;
+            status = updatedVotes.for > updatedVotes.against ? "passed" : "rejected";
           }
           
           return { ...law, votes: updatedVotes, status };
@@ -113,7 +113,7 @@ const Index = () => {
       title: proposal.title,
       description: proposal.description,
       proposedBy: proposal.proposedBy,
-      status: "pending" as const, // Use const assertion to fix the type error
+      status: "pending",
       votes: {
         for: 0,
         against: 0,
