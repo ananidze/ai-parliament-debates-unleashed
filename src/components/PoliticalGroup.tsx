@@ -1,8 +1,9 @@
 
 import React from "react";
 import { ParliamentaryGroup, Politician } from "../utils/parliamentUtils";
-import { BadgeCheck, Flag } from "lucide-react";
+import { BadgeCheck, Flag, Info } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { HoverCard, HoverCardContent, HoverCardTrigger } from "@/components/ui/hover-card";
 
 interface PoliticalGroupProps {
   group: ParliamentaryGroup;
@@ -45,15 +46,29 @@ const PoliticalGroup: React.FC<PoliticalGroupProps> = ({
     <div className="flex flex-col items-center gap-2 my-1">
       {/* Group label */}
       <div className={cn(
-        "text-xs font-semibold mb-1 px-2 py-0.5 rounded-full",
+        "text-xs font-semibold mb-1 px-2 py-0.5 rounded-full shadow-sm",
         getBgColor(),
         getTextColor()
       )}>
         {row === 0 && (
-          <span className="flex items-center gap-1">
-            <Flag className="w-3 h-3" />
-            {group.name}
-          </span>
+          <HoverCard>
+            <HoverCardTrigger asChild>
+              <span className="flex items-center gap-1 cursor-help">
+                <Flag className="w-3 h-3" />
+                {group.name}
+              </span>
+            </HoverCardTrigger>
+            <HoverCardContent className="w-64 p-3">
+              <div className="space-y-2">
+                <h4 className="font-semibold">{group.name}</h4>
+                <p className="text-xs text-muted-foreground">{group.orientation} orientation</p>
+                <div className="flex items-center gap-1">
+                  <Info className="w-3 h-3 text-muted-foreground" />
+                  <span className="text-xs">{group.seatsCount} seats in parliament</span>
+                </div>
+              </div>
+            </HoverCardContent>
+          </HoverCard>
         )}
       </div>
       
@@ -66,7 +81,7 @@ const PoliticalGroup: React.FC<PoliticalGroupProps> = ({
               "w-8 h-8 md:w-10 md:h-10 rounded-full cursor-pointer flex items-center justify-center transform hover:scale-110 transition-transform shadow-md",
               getBgColor(),
               getTextColor(),
-              "relative"
+              "relative animate-fade-in"
             )}
             onClick={() => onPoliticianClick(politician)}
             title={politician.name}

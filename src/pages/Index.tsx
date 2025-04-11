@@ -44,7 +44,7 @@ const Index = () => {
     if (activeLaw && activeLaw.id !== law.id) {
       setLawProposals(prevLaws => 
         prevLaws.map(l => 
-          l.id === activeLaw.id ? { ...l, status: "pending" } : l
+          l.id === activeLaw.id ? { ...l, status: "pending" as const } : l
         )
       );
     }
@@ -89,7 +89,7 @@ const Index = () => {
           let status = law.status;
           
           if (totalVotes >= 50) { // Arbitrary number for demonstration
-            status = updatedVotes.for > updatedVotes.against ? "passed" : "rejected";
+            status = updatedVotes.for > updatedVotes.against ? "passed" as const : "rejected" as const;
           }
           
           return { ...law, votes: updatedVotes, status };
@@ -123,11 +123,12 @@ const Index = () => {
     };
     
     setLawProposals(prev => [...prev, newLaw]);
+    toast.success("New law proposal submitted successfully");
   };
 
   return (
     <div className="min-h-screen bg-gray-50">
-      <header className="bg-primary text-white py-6 px-4 shadow-md">
+      <header className="bg-primary text-white py-4 px-4 shadow-md">
         <div className="container mx-auto">
           <h1 className="text-2xl md:text-3xl font-bold text-center">AI Parliament</h1>
           <p className="text-center opacity-90 mt-1">Virtual Democratic Assembly</p>
@@ -135,7 +136,7 @@ const Index = () => {
       </header>
       
       <main className="container mx-auto px-4 py-6">
-        <div className="bg-parliament-chamber rounded-3xl p-6 md:p-10 shadow-inner mb-8">
+        <div className="bg-parliament-chamber rounded-3xl p-4 md:p-8 shadow-inner mb-6">
           <ParliamentLayout 
             groups={politicalGroups}
             politicians={politicians}
@@ -144,13 +145,13 @@ const Index = () => {
         </div>
         
         <Tabs defaultValue="debate" className="w-full">
-          <TabsList className="grid w-full grid-cols-2">
+          <TabsList className="grid w-full grid-cols-2 mb-4">
             <TabsTrigger value="debate">Current Debates</TabsTrigger>
             <TabsTrigger value="propose">Propose New Law</TabsTrigger>
           </TabsList>
           
-          <TabsContent value="debate" className="mt-6">
-            <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+          <TabsContent value="debate" className="mt-4">
+            <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
               <div className="lg:col-span-1 space-y-4">
                 <h2 className="text-xl font-bold mb-4">Law Proposals</h2>
                 {lawProposals.map(law => (
@@ -188,7 +189,7 @@ const Index = () => {
             </div>
           </TabsContent>
           
-          <TabsContent value="propose" className="mt-6">
+          <TabsContent value="propose" className="mt-4">
             <div className="max-w-2xl mx-auto">
               <ProposalForm
                 groups={politicalGroups}
